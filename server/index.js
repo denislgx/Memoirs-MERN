@@ -5,6 +5,7 @@ import cors from 'cors';
 import colors from 'colors';
 
 import { MONGO_URI } from './consts.js';
+import postRoutes from './routes/posts.js';
 
 // Intitialize app
 
@@ -15,6 +16,10 @@ const app = express();
 app.use(bodyParser.json({ limit: '30mb', extended: true })); // limit for images uploads
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 app.use(cors());
+
+// Routes
+
+app.use('/posts', postRoutes);
 
 // Database Connection
 
