@@ -9,6 +9,7 @@ const Form = () => {
     creator: '',
     title: '',
     tags: '',
+    message: '',
     selectedFile: '',
   });
   const classes = useStyles();
@@ -50,7 +51,7 @@ const Form = () => {
         <TextField
           name="message"
           variant="outlined"
-          label="message"
+          label="Message"
           fullWidth
           value={postData.message}
           onChange={event =>
