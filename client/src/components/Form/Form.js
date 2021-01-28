@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { TextField, Button, Typography, Paper } from '@material-ui/core';
 import FileBase from 'react-file-base64';
+import { createPost } from '../../actions/postsActions';
 
 import useStyles from './styles';
 
@@ -13,8 +15,16 @@ const Form = () => {
     selectedFile: '',
   });
   const classes = useStyles();
+  const dispatch = useDispatch();
 
-  const handleSubmit = () => {};
+  const handleSubmit = event => {
+    event.preventDefault();
+    if (postData.message) {
+      dispatch(createPost(postData));
+    } else {
+      alert('ERROR: Write again the Memoir');
+    }
+  };
 
   const clear = () => {};
 
