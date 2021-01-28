@@ -34,7 +34,6 @@ const Form = () => {
         className={`${classes.root} ${classes.form}`}
         autoComplete="off"
         noValidate
-        className={classes.form}
         onSubmit={handleSubmit}
       >
         <Typography variant="h6">Creating a Memoir</Typography>
