@@ -1,4 +1,8 @@
-import { FETCH_POSTS, CREATE_POSTS } from '../constants/postConstants';
+import {
+  FETCH_POSTS,
+  CREATE_POSTS,
+  UPDATE_POST,
+} from '../constants/postConstants';
 
 export const postsReducers = (posts = [], action) => {
   switch (action.type) {
@@ -6,6 +10,10 @@ export const postsReducers = (posts = [], action) => {
       return action.payload;
     case CREATE_POSTS:
       return [...posts, action.payload];
+    case UPDATE_POST:
+      return posts.map(post =>
+        post._id === action.payload._id ? action.payload : post
+      );
     default:
       return posts;
   }

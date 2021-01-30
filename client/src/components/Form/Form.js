@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { TextField, Button, Typography, Paper } from '@material-ui/core';
 import FileBase from 'react-file-base64';
-import { createPost } from '../../actions/postsActions';
+import { createPost, updatePost } from '../../actions/postsActions';
 
 import useStyles from './styles';
 
-const Form = () => {
+const Form = ({ currentId, setCurrentId }) => {
   const [postData, setPostData] = useState({
     creator: '',
     title: '',
@@ -14,19 +14,44 @@ const Form = () => {
     message: '',
     selectedFile: '',
   });
+
+  const post = useSelector(state =>
+    currentId ? state.posts.find(post => post._id === currentId) : null
+  ); // for update func
+
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (post) {
+      setPostData(post);
+    }
+  }, [post]);
+
   const handleSubmit = event => {
     event.preventDefault();
-    if (postData.message) {
+    if (postData.message && !currentId) {
       dispatch(createPost(postData));
-    } else {
-      alert('ERROR: Write again the Memoir');
+    } else if (!postData.message) {
+      alert('Complete the fields to submit a Memoir.');
     }
+
+    if (currentId) {
+      dispatch(updatePost(currentId, postData));
+    }
+    clear();
   };
 
-  const clear = () => {};
+  const clear = () => {
+    setCurrentId(null);
+    setPostData({
+      creator: '',
+      title: '',
+      tags: '',
+      message: '',
+      selectedFile: '',
+    });
+  };
 
   return (
     <Paper className={classes.paper}>
@@ -36,7 +61,9 @@ const Form = () => {
         noValidate
         onSubmit={handleSubmit}
       >
-        <Typography variant="h6">Creating a Memoir</Typography>
+        <Typography variant="h6">
+          {currentId ? 'Editing' : 'Leave'} a Memoir
+        </Typography>
         <TextField
           name="creator"
           variant="outlined"
@@ -94,7 +121,7 @@ const Form = () => {
           type="submit"
           fullWidth
         >
-          Leave a Memoir
+          Submit a Memoir
         </Button>
         <Button
           className={classes.buttonSubmit}
