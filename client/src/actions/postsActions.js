@@ -4,6 +4,7 @@ import {
   CREATE_POSTS,
   UPDATE_POST,
   DELETE_POST,
+  LIKE_POST,
 } from '../constants/postConstants';
 
 export const getPosts = () => async dispatch => {
@@ -42,5 +43,15 @@ export const deletePost = postId => async dispatch => {
     dispatch({ type: DELETE_POST, payload: postId });
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const likePost = postId => async dispatch => {
+  try {
+    const { data } = await axios.patch(`/posts/${postId}/like`);
+
+    dispatch({ type: LIKE_POST, payload: data });
+  } catch (error) {
+    console.error(error.message);
   }
 };
