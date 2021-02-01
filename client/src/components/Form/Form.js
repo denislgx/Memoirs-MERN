@@ -30,14 +30,16 @@ const Form = ({ currentId, setCurrentId }) => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    if (postData.message && !currentId) {
-      dispatch(createPost(postData));
-    } else if (!postData.message) {
-      alert('Complete the fields to submit a Memoir.');
-    }
+    // if (postData.message && !currentId) {
+    //   dispatch(createPost(postData));
+    // } else if (!postData.message) {
+    //   alert('Complete the fields to submit a Memoir.');
+    // }
 
     if (currentId) {
       dispatch(updatePost(currentId, postData));
+    } else {
+      dispatch(createPost(postData));
     }
     clear();
   };

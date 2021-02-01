@@ -3,12 +3,12 @@ import {
   FETCH_POSTS,
   CREATE_POSTS,
   UPDATE_POST,
+  DELETE_POST,
 } from '../constants/postConstants';
 
 export const getPosts = () => async dispatch => {
   try {
     const { data } = await axios.get('/posts');
-    console.log('data', data);
     dispatch({ type: FETCH_POSTS, payload: data });
   } catch (error) {
     console.error(error);
@@ -30,6 +30,16 @@ export const updatePost = (postId, updatedPost) => async dispatch => {
     const { data } = await axios.patch(`/posts/${postId}`, updatedPost);
 
     dispatch({ type: UPDATE_POST, payload: data });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const deletePost = postId => async dispatch => {
+  try {
+    await axios.delete(`/posts/${postId}`);
+
+    dispatch({ type: DELETE_POST, payload: postId });
   } catch (error) {
     console.error(error);
   }

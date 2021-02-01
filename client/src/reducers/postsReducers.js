@@ -2,6 +2,7 @@ import {
   FETCH_POSTS,
   CREATE_POSTS,
   UPDATE_POST,
+  DELETE_POST,
 } from '../constants/postConstants';
 
 export const postsReducers = (posts = [], action) => {
@@ -14,6 +15,8 @@ export const postsReducers = (posts = [], action) => {
       return posts.map(post =>
         post._id === action.payload._id ? action.payload : post
       );
+    case DELETE_POST:
+      return posts.filter(post => post._id !== action.payload);
     default:
       return posts;
   }
