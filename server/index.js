@@ -3,11 +3,12 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import colors from 'colors';
+import dotenv from 'dotenv';
 
-import { MONGO_URI } from './consts.js';
 import postRoutes from './routes/posts.js';
 
 // Intitialize app
+dotenv.config();
 
 const app = express();
 
@@ -23,11 +24,11 @@ app.use('/posts', postRoutes);
 
 // Database Connection
 
-const PORT = process.env.port || 5000;
+const PORT = process.env.PORT || 5001;
 
 const connectB = async () => {
   try {
-    const connection = await mongoose.connect(MONGO_URI, {
+    const connection = await mongoose.connect(process.env.CONNECTION_URL, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
       useCreateIndex: true,
