@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { history, useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import {
   Avatar,
   Button,
@@ -13,6 +15,9 @@ import { GoogleLogin } from 'react-google-login';
 
 import Input from './Input';
 import Icon from './icon';
+
+import { AUTH } from '../../constants/authConstants';
+
 import { CLIENT_ID } from './const';
 
 import useStyles from './styles';
@@ -20,6 +25,8 @@ import useStyles from './styles';
 const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isSignedUp, setIsSignedUp] = useState(false);
+  const dispatch = useDispatch();
+  const history = useHistory();
   const classes = useStyles();
 
   const handleSubmit = () => {};
@@ -36,7 +43,15 @@ const Auth = () => {
   };
 
   const googleSucces = async res => {
-    console.log(res);
+    const result = res?.profileObj;
+    const token = res?.tokenObj?.['id_token'];
+
+    try {
+      dispatch({ type: AUTH, data: { result, token } });
+      history.push('/');
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const googleFailure = () => {
