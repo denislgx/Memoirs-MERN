@@ -6,6 +6,7 @@ import colors from 'colors';
 import dotenv from 'dotenv';
 
 import postRoutes from './routes/posts.js';
+import userRoutes from './routes/user.js';
 
 // Intitialize app
 
@@ -21,6 +22,7 @@ app.use(cors());
 // Routes
 
 app.use('/posts', postRoutes);
+app.use('/user', userRoutes);
 
 // Database Connection
 

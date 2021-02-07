@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { history, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import {
   Avatar,
@@ -16,22 +16,42 @@ import { GoogleLogin } from 'react-google-login';
 import Input from './Input';
 import Icon from './icon';
 
+import { signUp, signIn } from '../../actions/authActions';
 import { AUTH } from '../../constants/authConstants';
 
 import { CLIENT_ID } from './const';
 
 import useStyles from './styles';
 
+const initialState = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+};
+
 const Auth = () => {
+  const [formData, setFormData] = useState(initialState);
   const [showPassword, setShowPassword] = useState(false);
   const [isSignedUp, setIsSignedUp] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
 
-  const handleSubmit = () => {};
+  const handleSubmit = event => {
+    event.preventDefault();
+  };
 
-  const handleChange = () => {};
+  const handleChange = event => {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
+
+    if (isSignedUp) {
+      dispatch(signUp(formData, history));
+    } else {
+      dispatch(signIn(formData, history));
+    }
+  };
 
   const handleShowPassword = () => {
     setShowPassword(prevShowPassword => !prevShowPassword);
@@ -101,7 +121,7 @@ const Auth = () => {
             />
             {isSignedUp && (
               <Input
-                name="confirmePassword"
+                name="confirmPassword"
                 label="Repeat Password"
                 handleChange={handleChange}
                 type="password"
