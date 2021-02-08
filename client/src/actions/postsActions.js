@@ -10,6 +10,7 @@ import {
 export const getPosts = () => async dispatch => {
   try {
     const { data } = await axios.get('/posts');
+
     dispatch({ type: FETCH_POSTS, payload: data });
   } catch (error) {
     console.error(error);

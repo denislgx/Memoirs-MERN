@@ -41,16 +41,15 @@ const Auth = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
-  };
-
-  const handleChange = event => {
-    setFormData({ ...formData, [event.target.name]: event.target.value });
-
     if (isSignedUp) {
       dispatch(signUp(formData, history));
     } else {
       dispatch(signIn(formData, history));
     }
+  };
+
+  const handleChange = event => {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
   const handleShowPassword = () => {
@@ -59,7 +58,7 @@ const Auth = () => {
 
   const switchMode = () => {
     setIsSignedUp(prevMode => !prevMode);
-    handleShowPassword(false);
+    setShowPassword(false);
   };
 
   const googleSucces = async res => {

@@ -1,16 +1,16 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-// import dotenv from 'dotenv';
+import dotenv from 'dotenv';
 
 import User from '../models/user.js';
 
-// dotenv.config();
+dotenv.config();
 
 export const signUp = async (req, res) => {
   const { email, password, confirmPassword, firstName, lastName } = req.body;
 
   try {
-    const user = await User.find({ email });
+    const user = await User.findOne({ email });
 
     if (user) {
       return res.status(400).json({ message: 'User already exists.' });
@@ -34,7 +34,7 @@ export const signUp = async (req, res) => {
       { expiresIn: '1h' }
     );
 
-    res.status(200).json({ result, token });
+    res.status(201).json({ result, token });
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong.' });
   }

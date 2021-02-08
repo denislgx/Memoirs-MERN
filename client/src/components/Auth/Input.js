@@ -11,7 +11,6 @@ const Input = ({
   type,
   handleShowPassword,
 }) => {
-  let password = true;
   return (
     <Grid item xs={12} sm={half ? 6 : 12}>
       <TextField
@@ -24,12 +23,12 @@ const Input = ({
         autoFocus={autoFocus}
         type={type}
         InputProps={
-          name === password
+          name === 'password'
             ? {
                 endAdornment: (
                   <InputAdornment position="end">
-                    <IconButton property={handleShowPassword}>
-                      {type === password ? <Visibility /> : <VisibilityOff />}
+                    <IconButton onClick={handleShowPassword}>
+                      {type === 'password' ? <Visibility /> : <VisibilityOff />}
                     </IconButton>
                   </InputAdornment>
                 ),
