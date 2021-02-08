@@ -64,6 +64,10 @@ export const deletePost = async (req, res) => {
 export const likePost = async (req, res) => {
   const { id } = req.params;
 
+  if (!req.userId) {
+    return res.status(403).json({ message: 'Unauthenticated.' });
+  }
+
   try {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(404).json({ message: 'No post with that id.' });
@@ -71,15 +75,20 @@ export const likePost = async (req, res) => {
 
     const post = await PostMessage.findById(id);
 
-    const updatedPost = await PostMessage.findByIdAndUpdate(
-      id,
-      { likeCount: post.likeCount + 1 },
-      { new: true }
-    );
+    const index = post.likes.findIndex(id => id === String(req.userId));
+
+    if (index === -1) {
+      post.likes.push(req.userId);
+    } else {
+      post.likes = post.likes.filter(id => id !== String(req.userId));
+    }
+
+    const updatedPost = await PostMessage.findByIdAndUpdate(id, post, {
+      new: true,
+    });
 
     res.json(updatedPost);
   } catch (error) {
-    console.error('ACAAS');
     res.status(404).json({ message: error.message });
   }
 };

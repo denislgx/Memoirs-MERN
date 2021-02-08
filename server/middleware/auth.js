@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 
 const auth = async (req, res, next) => {
   try {
-    console.log(req.headers.authorization);
+    console.log('headers', req.headers.authorization);
     const token = req.headers.authorization.split(' ')[0];
     const isCustomAuth = token.length < 500; // if not Google Auth.
 
