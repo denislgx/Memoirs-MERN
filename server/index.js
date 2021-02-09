@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import colors from 'colors';
 import dotenv from 'dotenv';
+import morgan from 'morgan';
 
 import postRoutes from './routes/posts.js';
 import userRoutes from './routes/user.js';
@@ -18,6 +19,7 @@ const app = express();
 app.use(bodyParser.json({ limit: '30mb', extended: true })); // limit for images uploads
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 app.use(cors());
+app.use(morgan('dev'));
 
 // Routes
 

@@ -1,26 +1,26 @@
-import axios from 'axios';
 import { AUTH } from '../constants/authConstants';
+import * as api from '../api/index';
 
-export const signUp = (formData, history) => async dispatch => {
+export const signIn = (formData, router) => async dispatch => {
   try {
-    const { data } = await axios.post('/user/signup', formData);
+    const { data } = await api.signIn(formData);
 
     dispatch({ type: AUTH, data });
 
-    history.push('/');
+    router.push('/');
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 };
 
-export const signIn = (formData, history) => async dispatch => {
+export const signUp = (formData, router) => async dispatch => {
   try {
-    const { data } = await axios.post('/user/signin', formData);
+    const { data } = await api.signUp(formData);
 
     dispatch({ type: AUTH, data });
 
-    history.push('/');
+    router.push('/');
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 };

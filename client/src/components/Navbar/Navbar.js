@@ -29,7 +29,6 @@ const Navbar = () => {
     setUser(null);
   };
 
-  console.log('aaaa', user);
   return (
     <AppBar className={classes.appBar} position="static" color="inherit">
       <div className={classes.brandContainer}>
