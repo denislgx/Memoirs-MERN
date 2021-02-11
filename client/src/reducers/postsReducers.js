@@ -9,7 +9,11 @@ import {
 export const postsReducers = (posts = [], action) => {
   switch (action.type) {
     case FETCH_POSTS:
-      return action.payload;
+      return {
+        posts: action.payload.postMessages,
+        pages: action.payload.pages,
+        page: action.payload.page,
+      };
     case CREATE_POSTS:
       return [...posts, action.payload];
     case UPDATE_POST:

@@ -3,10 +3,20 @@ import PostMessage from '../models/postMessage.js';
 
 export const getPosts = async (req, res) => {
   console.log('HEADERSSSSSSS', req.headers);
-  try {
-    const postMessages = await PostMessage.find();
 
-    res.status(200).json(postMessages);
+  let PAGE_SIZE = 4;
+  let page = Number(req.query.page || '1');
+  let total = await PostMessage.countDocuments({});
+  let postMessages = await PostMessage.find({})
+    .limit(PAGE_SIZE)
+    .skip(PAGE_SIZE * (page - 1));
+
+  try {
+    // const postMessages = await PostMessage.find();
+
+    res
+      .status(200)
+      .json({ postMessages, page, pages: Math.ceil(total / PAGE_SIZE) });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
