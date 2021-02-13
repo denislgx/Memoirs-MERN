@@ -6,27 +6,39 @@ import {
   LIKE_POST,
 } from '../constants/postConstants';
 
-export const postsReducers = (posts = [], action) => {
+export const postsReducers = (
+  postsData = { posts: [], pages: '', page: '' },
+  action
+) => {
   switch (action.type) {
     case FETCH_POSTS:
-      return {
-        posts: action.payload.postMessages,
-        pages: action.payload.pages,
-        page: action.payload.page,
-      };
+      // console.log('payload', action.payload);
+      let { postMessages, pages, page } = action.payload;
+      return { posts: postMessages, pages, page };
+    // return {
+    //   posts: action.payload.postMessages,
+    //   pages: action.payload.pages,
+    //   page: action.payload.page,
+    // };
     case CREATE_POSTS:
-      return [...posts, action.payload];
+      console.log('payload', action.payload);
+      return { ...postsData, posts: [...postsData.posts, action.payload] };
+    // return [...posts, action.payload];
+    // return postsData;
     case UPDATE_POST:
-      return posts.map(post =>
-        post._id === action.payload._id ? action.payload : post
-      );
+      // return posts.map(post =>
+      //   post._id === action.payload._id ? action.payload : post
+      // );
+      return postsData;
     case DELETE_POST:
-      return posts.filter(post => post._id !== action.payload);
+      // return posts.filter(post => post._id !== action.payload);
+      return postsData;
     case LIKE_POST:
-      return posts.map(post =>
+      // console.log('action payload', action.payload);
+      return postsData.posts.map(post =>
         post._id === action.payload._id ? action.payload : post
       );
     default:
-      return posts;
+      return postsData;
   }
 };
