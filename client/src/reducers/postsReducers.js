@@ -39,10 +39,16 @@ export const postsReducers = (
       };
     // return postsData;
     case LIKE_POST:
-      // console.log('action payload', action.payload);
-      return postsData.posts.map(post =>
-        post._id === action.payload._id ? action.payload : post
-      );
+      // console.log('like payload', action.payload);
+      return {
+        ...postsData,
+        posts: postsData.posts.map(post =>
+          post._id === action.payload._id ? action.payload : post
+        ),
+      };
+    // return postsData.posts.map(post =>
+    //   post._id === action.payload._id ? action.payload : post
+    // );
     default:
       return postsData;
   }
