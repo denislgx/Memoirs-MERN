@@ -21,18 +21,23 @@ export const postsReducers = (
     //   page: action.payload.page,
     // };
     case CREATE_POSTS:
-      console.log('payload', action.payload);
+      // console.log('payload', action.payload);
       return { ...postsData, posts: [...postsData.posts, action.payload] };
     // return [...posts, action.payload];
     // return postsData;
     case UPDATE_POST:
+      // console.log('payload update', action.payload);
       // return posts.map(post =>
       //   post._id === action.payload._id ? action.payload : post
       // );
       return postsData;
     case DELETE_POST:
-      // return posts.filter(post => post._id !== action.payload);
-      return postsData;
+      // console.log('payload delete', action.payload);
+      return {
+        ...postsData,
+        posts: postsData.posts.filter(post => post._id !== action.payload),
+      };
+    // return postsData;
     case LIKE_POST:
       // console.log('action payload', action.payload);
       return postsData.posts.map(post =>

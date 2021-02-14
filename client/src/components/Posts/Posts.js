@@ -9,7 +9,7 @@ const Posts = ({ setCurrentId }) => {
   const posts = useSelector(state => state.postsData.posts);
   const classes = useStyles();
 
-  console.log('posssssts', posts);
+  // console.log('posssssts', posts);
   return !posts?.length ? (
     <CircularProgress />
   ) : (

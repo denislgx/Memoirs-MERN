@@ -15,7 +15,9 @@ const Form = ({ currentId, setCurrentId }) => {
   });
 
   const post = useSelector(state =>
-    currentId ? state.posts.find(post => post._id === currentId) : null
+    currentId
+      ? state.postsData.posts.find(post => post._id === currentId)
+      : null
   ); // for update func
 
   const user = JSON.parse(localStorage.getItem('profile'));
@@ -67,7 +69,7 @@ const Form = ({ currentId, setCurrentId }) => {
     );
   }
 
-  console.log('user', user?.result?.name);
+  // console.log('user', user?.result?.name);
   return (
     <Paper className={classes.paper}>
       <form
