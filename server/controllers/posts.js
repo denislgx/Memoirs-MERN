@@ -2,8 +2,6 @@ import mongoose from 'mongoose';
 import PostMessage from '../models/postMessage.js';
 
 export const getPosts = async (req, res) => {
-  console.log('HEADERSSSSSSS', req.headers);
-
   let PAGE_SIZE = 4;
   let page = Number(req.query.page || '1');
   let total = await PostMessage.countDocuments({});
@@ -12,8 +10,6 @@ export const getPosts = async (req, res) => {
     .skip(PAGE_SIZE * (page - 1));
 
   try {
-    // const postMessages = await PostMessage.find();
-
     res
       .status(200)
       .json({ postMessages, page, pages: Math.ceil(total / PAGE_SIZE) });

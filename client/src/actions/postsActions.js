@@ -7,11 +7,9 @@ import {
 } from '../constants/postConstants';
 import * as api from '../api/index.js';
 
-export const getPosts = () => async dispatch => {
+export const getPosts = (pageNumber = '') => async dispatch => {
   try {
-    const { data } = await api.fetchPosts();
-
-    // console.log('DATAAAAAAA >>>>>>>', data);
+    const { data } = await api.fetchPosts(pageNumber);
 
     dispatch({ type: FETCH_POSTS, payload: data });
   } catch (error) {
