@@ -6,6 +6,7 @@ export const getPosts = async (req, res) => {
   let page = Number(req.query.page || '1');
   let total = await PostMessage.countDocuments({});
   let postMessages = await PostMessage.find({})
+    .sort({ createdAt: -1 })
     .limit(PAGE_SIZE)
     .skip(PAGE_SIZE * (page - 1));
 

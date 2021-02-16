@@ -13,7 +13,8 @@ const App = () => {
         <Navbar />
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/" component={Auth} />
+          <Route path="/auth" component={Auth} />
+          <Route path="*" render={() => <h1>Page Not Found</h1>} />
         </Switch>
       </Container>
     </BrowserRouter>
